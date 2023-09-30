@@ -122,21 +122,29 @@ echo "# -1-----------------"
 echo "# [$PACKAGES]"
 echo "# -1================="
 echo $APT_CACHE_DIR
-echo "# -2-----------------"
-ls -laR $APT_CACHE_DIR
-echo "# -2================="
 
 mkdir -p "$APT_CACHE_DIR/archives/partial"
 mkdir -p "$APT_STATE_DIR/lists/partial"
 
 APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR"
 
+echo "# -before removal-----------------"
+ls -laR $APT_CACHE_DIR
+echo "# -before removal================="
+rm "$APT_CACHE_DIR/google-chrome*"
+echo "# -after emoval-----------------"
+ls -laR $APT_CACHE_DIR
+echo "# -after removal================="
+
+
 topic "Updating apt caches"
 apt-get $APT_OPTIONS update | indent
 
-echo "# -3-----------------"
-echo $PACKAGES
-echo "# -3================="
+
+echo "# -after update-----------------"
+ls -laR $APT_CACHE_DIR
+echo "# -after update================="
+
 
 
 for PACKAGE in $PACKAGES; do
@@ -157,13 +165,12 @@ echo "# -4================="
   fi
 done
 
+
+echo "# -after download-----------------"
+ls -laR $APT_CACHE_DIR
+echo "# -after download================="
+
 mkdir -p $BUILD_DIR/.apt
-
-
-echo "# -5-----------------"
-ls -la $APT_CACHE_DIR/archives/*.deb
-echo "# -5================="
-
 
 for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   topic "Installing $(basename $DEB)"
