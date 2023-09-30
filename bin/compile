@@ -118,13 +118,13 @@ PACKAGES="$PACKAGES https://dl.google.com/linux/chrome/deb/pool/main/g/google-ch
 APT_CACHE_DIR="$CACHE_DIR/apt/cache"
 APT_STATE_DIR="$CACHE_DIR/apt/state"
 
-echo "#---------------------"
+echo "# -1-----------------"
 echo "# [$PACKAGES]"
-echo "#-----===1=----------------"
+echo "# -1================="
 echo $APT_CACHE_DIR
-echo "#-----===2=----------------"
-ls -la $APT_CACHE_DIR
-echo "#---------------------"
+echo "# -2-----------------"
+ls -laR $APT_CACHE_DIR
+echo "# -2================="
 
 mkdir -p "$APT_CACHE_DIR/archives/partial"
 mkdir -p "$APT_STATE_DIR/lists/partial"
@@ -134,19 +134,16 @@ APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state
 topic "Updating apt caches"
 apt-get $APT_OPTIONS update | indent
 
-echo "-----------2-------------"
+echo "# -3-----------------"
 echo $PACKAGES
-echo "================"
+echo "# -3================="
 
 
 for PACKAGE in $PACKAGES; do
 
-
-echo "-----------3-------------"
-echo $PACKAGES
-echo "================"
-
-
+echo "# -4-----------------"
+echo $PACKAGE
+echo "# -4================="
 
   if [[ $PACKAGE == *deb ]]; then
     PACKAGE_NAME=$(basename $PACKAGE .deb)
@@ -161,6 +158,12 @@ echo "================"
 done
 
 mkdir -p $BUILD_DIR/.apt
+
+
+echo "# -5-----------------"
+ls -la $APT_CACHE_DIR/archives/*.deb
+echo "# -5================="
+
 
 for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
   topic "Installing $(basename $DEB)"
