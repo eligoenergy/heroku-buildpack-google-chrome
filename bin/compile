@@ -131,7 +131,7 @@ APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state
 echo "# -before removal-----------------"
 ls -laR $APT_CACHE_DIR
 echo "# -before removal================="
-rm "$APT_CACHE_DIR/google-chrome*"
+rm "$APT_CACHE_DIR/archives/google-chrome*"
 echo "# -after emoval-----------------"
 ls -laR $APT_CACHE_DIR
 echo "# -after removal================="
