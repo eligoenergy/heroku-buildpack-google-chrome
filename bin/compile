@@ -135,7 +135,7 @@ ls -laR $APT_CACHE_DIR/archives
 echo "# ---"
 ls -laR $APT_CACHE_DIR/archives/google-chrome-*
 echo "# ---"
-rm "$APT_CACHE_DIR/archives/google-chrome-*"
+rm $APT_CACHE_DIR/archives/google-chrome-*
 echo "# -after emoval-----------------"
 ls -laR $APT_CACHE_DIR
 echo "# -after removal================="
