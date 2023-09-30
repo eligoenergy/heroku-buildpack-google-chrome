@@ -114,16 +114,17 @@ else
 fi
 
 PACKAGES="$PACKAGES https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_$chrome_version-1_amd64.deb"
-echo "#---------------------"
-echo "# [$PACKAGES]"
-echo "#-----===1=----------------"
-echo "$APT_CACHE_DIR"
-echo "#-----===2=----------------"
-ls -la $APT_CACHE_DIR
-echo "#---------------------"
 
 APT_CACHE_DIR="$CACHE_DIR/apt/cache"
 APT_STATE_DIR="$CACHE_DIR/apt/state"
+
+echo "#---------------------"
+echo "# [$PACKAGES]"
+echo "#-----===1=----------------"
+echo $APT_CACHE_DIR
+echo "#-----===2=----------------"
+ls -la $APT_CACHE_DIR
+echo "#---------------------"
 
 mkdir -p "$APT_CACHE_DIR/archives/partial"
 mkdir -p "$APT_STATE_DIR/lists/partial"
@@ -133,7 +134,20 @@ APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state
 topic "Updating apt caches"
 apt-get $APT_OPTIONS update | indent
 
+echo "-----------2-------------"
+echo $PACKAGES
+echo "================"
+
+
 for PACKAGE in $PACKAGES; do
+
+
+echo "-----------3-------------"
+echo $PACKAGES
+echo "================"
+
+
+
   if [[ $PACKAGE == *deb ]]; then
     PACKAGE_NAME=$(basename $PACKAGE .deb)
     PACKAGE_FILE=$APT_CACHE_DIR/archives/$PACKAGE_NAME.deb
